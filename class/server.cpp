@@ -4,6 +4,7 @@ ChatServer::ChatServer()
 {
     // CREATE SOCKET
     this->servSock = socket(AF_INET, SOCK_STREAM, 0);
+
     // CONFIGURE ADDRESS SETTINGS FOR THE SERVER
     this->Server_Addr.sin_family      = AF_INET;
     this->Server_Addr.sin_port        = htons(CHAT_PORT);
@@ -17,9 +18,11 @@ ChatServer::ChatServer()
 
 }
 
+
 ChatServer* ChatServer::Server = nullptr;
 
-ChatServer* ChatServer::getInstance(){
+ChatServer* ChatServer::getInstance()
+{
     if (Server == nullptr){
         Server = new ChatServer();
     }
@@ -30,5 +33,13 @@ void ChatServer::ACCEPT_CLIENTS()
 {    
     socklen_t clnlen;
     accept(this->servSock, (sockaddr*)&(this->Server_Addr), &clnlen);
+}
+
+void ChatServer::handleClient(){}
+
+void ChatServer::bindToThread()
+{
+    
+    this->NUMBER_OF_CLIENTS++;
 }
 

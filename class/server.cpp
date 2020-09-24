@@ -2,6 +2,9 @@
 
 ChatServer::ChatServer()
 {
+    // INIT
+    this->NUMBER_OF_CLIENTS = 0;
+
     // CREATE SOCKET
     this->servSock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -15,6 +18,7 @@ ChatServer::ChatServer()
 
     // LISTEN
     listen(this->servSock, 5);
+    
 
 }
 
@@ -31,15 +35,29 @@ ChatServer* ChatServer::getInstance()
 
 void ChatServer::ACCEPT_CLIENTS()
 {    
+    std::cout << "######################" << std::endl;
+    std::cout << "WAITING FOR CLIENTS..." << std::endl;
+    std::cout << "######################" << std::endl << std::endl;
     socklen_t clnlen;
-    accept(this->servSock, (sockaddr*)&(this->Server_Addr), &clnlen);
+    int acceptStatus = accept(this->servSock, (sockaddr*)&(this->Server_Addr), &clnlen);
+    if (acceptStatus > 0)
+    {
+        bindToThread();
+    }
 }
 
-void ChatServer::handleClient(){}
+void ChatServer::handleClient(){
+    std::cout << "###################" << std::endl;
+    std::cout << "CONNECTED A CLIENT!" << std::endl;
+    std::cout << this->NUMBER_OF_CLIENTS << " MANY CLIENTS" << std::endl;
+    std::cout << "###################" << std::endl;
+}
 
 void ChatServer::bindToThread()
 {
-    
+
+    this->CLIENT_THREADS[this->NUMBER_OF_CLIENTS] = std::thread(&ChatServer::handleClient, this);
     this->NUMBER_OF_CLIENTS++;
+
 }
 

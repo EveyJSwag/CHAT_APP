@@ -15,13 +15,13 @@ class ChatServer
     private:
         ChatServer();                       // Constructor
 
-        void bindToThread();                // Bind each incoming client to a thread
+                        // Bind each incoming client to a thread
         void handleClient();                // What to do with each client
 
         static ChatServer *Server;          // Single static instance of server
         struct sockaddr_in Server_Addr;     // Struct for server address <netinet/in.h>
 
-        std::thread CLIENT_THREADS[10];     // All of the clients' threads
+        
         typedef struct CLIENT_INFO          // Structure for client information
         {
             struct sockaddr_in Client_Addr;
@@ -32,6 +32,8 @@ class ChatServer
 
 
     public:
+        std::thread CLIENT_THREADS[10];     // All of the clients' threads
+        void bindToThread();
         unsigned long NUMBER_OF_CLIENTS;    // Number of how many clients are connected to server
         int servSock;                       // The socket's 'value'
         static ChatServer* getInstance();   // Get the single static instance

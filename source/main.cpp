@@ -1,12 +1,21 @@
 #include <iostream>
+#include <vector>
 #include "../class/server.h"
+
+std::thread threadArray[10];
+
+void testFunction()
+{
+    std::cout << "WHY GOD";
+}
 
 int main() {
     
     ChatServer* SERVER = SERVER->getInstance();
 
-    //std::cout << "LISTENING ON PORT " << CHAT_PORT << std::endl;
-
-    SERVER->ACCEPT_CLIENTS();
+    while(1){
+        SERVER->ACCEPT_CLIENTS();
+    }
+    
 
 }

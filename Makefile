@@ -1,11 +1,11 @@
-objects = source/main.o class/client.o class/server.o 
-cFiles = source/main.cpp class/client.cpp class/server.cpp 
+objects = source/main.o class/client.o class/server.o
+cFiles = source/main.cpp class/client.cpp class/server.cpp
 
 ChatServer : $(objects)
-	g++ -o ChatServer $?
+	clang++ -o ChatServer $?
 
 $(objects) : $(cFiles)
-	g++ -c $*.cpp -o $@
+	clang++ -std=c++17 -c $*.cpp -o $@
 
 .PHONY: clean
 clean:

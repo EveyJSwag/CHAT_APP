@@ -49,18 +49,27 @@ void ChatServer::ACCEPT_CLIENTS()
 
 void ChatServer::handleClient()
 {
+    char buffer[100];
     socklen_t clientLength;
     static unsigned short* currentIP;
     getpeername(CLIENTS[this->NUMBER_OF_CLIENTS].Client_Sock, (sockaddr*)&CLIENTS[this->NUMBER_OF_CLIENTS].Client_Addr,  &clientLength);
     currentIP = parseIPV4(CLIENTS[this->NUMBER_OF_CLIENTS].Client_Addr.sin_addr.s_addr);
     
+    int currentSocket = CLIENTS[this->NUMBER_OF_CLIENTS].Client_Sock;
+
     std::cout << "###################" << std::endl;
     std::cout << "CONNECTED A CLIENT!" << std::endl;
     printIPV4(currentIP);
     std::cout << this->NUMBER_OF_CLIENTS+1 << " TOTAL CLIENTS" << std::endl;
+    std::cout << "WAITING FOR DATA..." << std::endl;
     std::cout << "###################" << std::endl;
     this->NUMBER_OF_CLIENTS++;
     while(1){
+
+        if (recv(currentSocket, buffer, 100,0) > 0)
+        {
+            std::cout << buffer << std::endl;
+        }
 
     }
     
